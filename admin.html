@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Ahmad Fahim</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+            animation: fadeIn 1.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #333;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #fff, #aaa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 60vh;
+        }
+        
+        .login-box {
+            background: rgba(255,255,255,0.03);
+            border-radius: 15px;
+            border: 1px solid #333;
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        
+        .login-box h2 {
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+            color: #e0e0e0;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            color: #ccc;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid #444;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 0.95rem;
+            font-family: inherit;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #888;
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(90deg, #444, #666);
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+        
+        .submit-btn:hover {
+            background: linear-gradient(90deg, #555, #777);
+        }
+        
+        .error-message {
+            background: rgba(255,107,107,0.1);
+            color: #ff6b6b;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .success-message {
+            background: rgba(76,175,80,0.1);
+            color: #4caf50;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .admin-panel {
+            display: none;
+        }
+        
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #333;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .admin-nav {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .admin-nav button {
+            background: transparent;
+            color: #888;
+            border: 1px solid #444;
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .admin-nav button:hover, .admin-nav button.active {
+            color: #fff;
+            border-color: #fff;
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .logout-btn {
+            background: transparent;
+            color: #ff6b6b;
+            border: 1px solid #ff6b6b;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .logout-btn:hover {
+            background: rgba(255,107,107,0.1);
+        }
+        
+        .section {
+            margin-bottom: 35px;
+            padding: 25px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 10px;
+            border-left: 3px solid #444;
+        }
+        
+        h2 {
+            color: #e0e0e0;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+        
+        h3 {
+            color: #ccc;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .items-list {
+            margin-top: 30px;
+        }
+        
+        .item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 3px solid #444;
+        }
+        
+        .item-row:hover {
+            border-color: #888;
+        }
+        
+        .item-info h4 {
+            color: #e0e0e0;
+            margin-bottom: 5px;
+        }
+        
+        .item-info span {
+            color: #888;
+            font-size: 0.85rem;
+        }
+        
+        .item-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .item-actions button {
+            background: transparent;
+            border: 1px solid #444;
+            color: #888;
+            padding: 6px 15px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+        
+        .item-actions button:hover {
+            border-color: #fff;
+            color: #fff;
+        }
+        
+        .item-actions button.delete {
+            border-color: #ff6b6b;
+            color: #ff6b6b;
+        }
+        
+        .item-actions button.delete:hover {
+            background: rgba(255,107,107,0.1);
+        }
+        
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>ADMIN PANEL</h1>
+            <p style="color: #888;">Manage Blog Posts and Projects</p>
+        </header>
+
+        <!-- Login Form -->
+        <div id="login-section" class="login-container">
+            <div class="login-box">
+                <h2>Admin Login</h2>
+                <div id="login-error"></div>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" id="username" placeholder="Enter username" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="password" placeholder="Enter password" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Login</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Admin Panel -->
+        <div id="admin-section" class="admin-panel">
+            <div class="admin-header">
+                <h2>Dashboard</h2>
+                <div class="admin-nav">
+                    <button class="active" onclick="showTab('blogs')">Manage Blogs</button>
+                    <button onclick="showTab('projects')">Manage Projects</button>
+                </div>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+
+            <!-- Blog Management -->
+            <div id="blogs-tab" class="tab-content">
+                <div class="section">
+                    <h3 id="blog-form-title">Add New Blog</h3>
+                    <div id="blog-message"></div>
+                    <form id="blog-form">
+                        <input type="hidden" id="blog-id">
+                        <div class="form-group">
+                            <label>Title *</label>
+                            <input type="text" id="blog-title" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Content *</label>
+                            <textarea id="blog-content" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Excerpt</label>
+                            <input type="text" id="blog-excerpt" placeholder="Short description">
+                        </div>
+                        <div class="form-group">
+                            <label>Author</label>
+                            <input type="text" id="blog-author" value="Admin">
+                        </div>
+                        <div class="form-group">
+                            <label>Image</label>
+                            <input type="file" id="blog-image" accept="image/*">
+                        </div>
+                        <button type="submit" class="submit-btn">Save Blog</button>
+                        <button type="button" class="submit-btn" style="background: #444; margin-left: 10px;" onclick="resetBlogForm()">Cancel</button>
+                    </form>
+                </div>
+
+                <div class="items-list">
+                    <h3>Existing Blogs</h3>
+                    <div id="blogs-list"></div>
+                </div>
+            </div>
+
+            <!-- Project Management -->
+            <div id="projects-tab" class="tab-content hidden">
+                <div class="section">
+                    <h3 id="project-form-title">Add New Project</h3>
+                    <div id="project-message"></div>
+                    <form id="project-form">
+                        <input type="hidden" id="project-id">
+                        <div class="form-group">
+                            <label>Project Title *</label>
+                            <input type="text" id="project-title" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Description *</label>
+                            <textarea id="project-description" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Technologies (comma-separated)</label>
+                            <input type="text" id="project-technologies" placeholder="Python, React, Node.js">
+                        </div>
+                        <div class="form-group">
+                            <label>GitHub Link</label>
+                            <input type="url" id="project-github" placeholder="https://github.com/...">
+                        </div>
+                        <div class="form-group">
+                            <label>Live Demo Link</label>
+                            <input type="url" id="project-live" placeholder="https://...">
+                        </div>
+                        <div class="form-group">
+                            <label>Project Image</label>
+                            <input type="file" id="project-image" accept="image/*">
+                        </div>
+                        <button type="submit" class="submit-btn">Save Project</button>
+                        <button type="button" class="submit-btn" style="background: #444; margin-left: 10px;" onclick="resetProjectForm()">Cancel</button>
+                    </form>
+                </div>
+
+                <div class="items-list">
+                    <h3>Existing Projects</h3>
+                    <div id="projects-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = '/api';
+        let authToken = localStorage.getItem('adminToken');
+
+        // Check if already logged in
+        if (authToken) {
+            showAdminPanel();
+        }
+
+        // Login Form
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            try {
+                const response = await fetch(`${API_URL}/admin/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    authToken = data.token;
+                    localStorage.setItem('adminToken', authToken);
+                    showAdminPanel();
+                } else {
+                    document.getElementById('login-error').innerHTML = 
+                        `<div class="error-message">${data.error || 'Login failed'}</div>`;
+                }
+            } catch (error) {
+                document.getElementById('login-error').innerHTML = 
+                    `<div class="error-message">Server error. Please try again.</div>`;
+            }
+        });
+
+        function showAdminPanel() {
+            document.getElementById('login-section').style.display = 'none';
+            document.getElementById('admin-section').style.display = 'block';
+            loadBlogs();
+        }
+
+        function logout() {
+            localStorage.removeItem('adminToken');
+            authToken = null;
+            location.reload();
+        }
+
+        function showTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`${tab}-tab`).classList.remove('hidden');
+            document.querySelectorAll('.admin-nav button').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            if (tab === 'blogs') loadBlogs();
+            if (tab === 'projects') loadProjects();
+        }
+
+        // Blog Functions
+        async function loadBlogs() {
+            try {
+                const response = await fetch(`${API_URL}/blogs`);
+                const blogs = await response.json();
+                
+                document.getElementById('blogs-list').innerHTML = blogs.length === 0 
+                    ? '<p style="color: #888; text-align: center;">No blogs yet.</p>'
+                    : blogs.map(blog => `
+                        <div class="item-row">
+                            <div class="item-info">
+                                <h4>${blog.title}</h4>
+                                <span>${new Date(blog.createdAt).toLocaleDateString()}</span>
+                            </div>
+                            <div class="item-actions">
+                                <button onclick="editBlog('${blog.id}')">Edit</button>
+                                <button class="delete" onclick="deleteBlog('${blog.id}')">Delete</button>
+                            </div>
+                        </div>
+                    `).join('');
+            } catch (error) {
+                console.error('Error loading blogs:', error);
+            }
+        }
+
+        document.getElementById('blog-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData();
+            formData.append('title', document.getElementById('blog-title').value);
+            formData.append('content', document.getElementById('blog-content').value);
+            formData.append('excerpt', document.getElementById('blog-excerpt').value);
+            formData.append('author', document.getElementById('blog-author').value);
+            
+            const imageFile = document.getElementById('blog-image').files[0];
+            if (imageFile) formData.append('image', imageFile);
+            
+            const blogId = document.getElementById('blog-id').value;
+            const url = blogId ? `${API_URL}/blogs/${blogId}` : `${API_URL}/blogs`;
+            const method = blogId ? 'PUT' : 'POST';
+            
+            try {
+                const response = await fetch(url, {
+                    method,
+                    headers: { 'Authorization': `Bearer ${authToken}` },
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    document.getElementById('blog-message').innerHTML = 
+                        `<div class="success-message">Blog saved successfully!</div>`;
+                    resetBlogForm();
+                    loadBlogs();
+                } else {
+                    const data = await response.json();
+                    document.getElementById('blog-message').innerHTML = 
+                        `<div class="error-message">${data.error}</div>`;
+                }
+            } catch (error) {
+                document.getElementById('blog-message').innerHTML = 
+                    `<div class="error-message">Error saving blog</div>`;
+            }
+        });
+
+        async function editBlog(id) {
+            try {
+                const response = await fetch(`${API_URL}/blogs/${id}`);
+                const blog = await response.json();
+                
+                document.getElementById('blog-id').value = blog.id;
+                document.getElementById('blog-title').value = blog.title;
+                document.getElementById('blog-content').value = blog.content;
+                document.getElementById('blog-excerpt').value = blog.excerpt || '';
+                document.getElementById('blog-author').value = blog.author;
+                document.getElementById('blog-form-title').textContent = 'Edit Blog';
+            } catch (error) {
+                console.error('Error loading blog:', error);
+            }
+        }
+
+        async function deleteBlog(id) {
+            if (!confirm('Are you sure you want to delete this blog?')) return;
+            
+            try {
+                await fetch(`${API_URL}/blogs/${id}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                loadBlogs();
+            } catch (error) {
+                console.error('Error deleting blog:', error);
+            }
+        }
+
+        function resetBlogForm() {
+            document.getElementById('blog-form').reset();
+            document.getElementById('blog-id').value = '';
+            document.getElementById('blog-form-title').textContent = 'Add New Blog';
+            document.getElementById('blog-message').innerHTML = '';
+        }
+
+        // Project Functions
+        async function loadProjects() {
+            try {
+                const response = await fetch(`${API_URL}/projects`);
+                const projects = await response.json();
+                
+                document.getElementById('projects-list').innerHTML = projects.length === 0 
+                    ? '<p style="color: #888; text-align: center;">No projects yet.</p>'
+                    : projects.map(project => `
+                        <div class="item-row">
+                            <div class="item-info">
+                                <h4>${project.title}</h4>
+                                <span>${new Date(project.createdAt).toLocaleDateString()}</span>
+                            </div>
+                            <div class="item-actions">
+                                <button onclick="editProject('${project.id}')">Edit</button>
+                                <button class="delete" onclick="deleteProject('${project.id}')">Delete</button>
+                            </div>
+                        </div>
+                    `).join('');
+            } catch (error) {
+                console.error('Error loading projects:', error);
+            }
+        }
+
+        document.getElementById('project-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData();
+            formData.append('title', document.getElementById('project-title').value);
+            formData.append('description', document.getElementById('project-description').value);
+            formData.append('technologies', document.getElementById('project-technologies').value);
+            formData.append('githubLink', document.getElementById('project-github').value);
+            formData.append('liveLink', document.getElementById('project-live').value);
+            
+            const imageFile = document.getElementById('project-image').files[0];
+            if (imageFile) formData.append('image', imageFile);
+            
+            const projectId = document.getElementById('project-id').value;
+            const url = projectId ? `${API_URL}/projects/${projectId}` : `${API_URL}/projects`;
+            const method = projectId ? 'PUT' : 'POST';
+            
+            try {
+                const response = await fetch(url, {
+                    method,
+                    headers: { 'Authorization': `Bearer ${authToken}` },
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    document.getElementById('project-message').innerHTML = 
+                        `<div class="success-message">Project saved successfully!</div>`;
+                    resetProjectForm();
+                    loadProjects();
+                } else {
+                    const data = await response.json();
+                    document.getElementById('project-message').innerHTML = 
+                        `<div class="error-message">${data.error}</div>`;
+                }
+            } catch (error) {
+                document.getElementById('project-message').innerHTML = 
+                    `<div class="error-message">Error saving project</div>`;
+            }
+        });
+
+        async function editProject(id) {
+            try {
+                const response = await fetch(`${API_URL}/projects/${id}`);
+                const project = await response.json();
+                
+                document.getElementById('project-id').value = project.id;
+                document.getElementById('project-title').value = project.title;
+                document.getElementById('project-description').value = project.description;
+                document.getElementById('project-technologies').value = project.technologies ? project.technologies.join(', ') : '';
+                document.getElementById('project-github').value = project.githubLink || '';
+                document.getElementById('project-live').value = project.liveLink || '';
+                document.getElementById('project-form-title').textContent = 'Edit Project';
+            } catch (error) {
+                console.error('Error loading project:', error);
+            }
+        }
+
+        async function deleteProject(id) {
+            if (!confirm('Are you sure you want to delete this project?')) return;
+            
+            try {
+                await fetch(`${API_URL}/projects/${id}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                loadProjects();
+            } catch (error) {
+                console.error('Error deleting project:', error);
+            }
+        }
+
+        function resetProjectForm() {
+            document.getElementById('project-form').reset();
+            document.getElementById('project-id').value = '';
+            document.getElementById('project-form-title').textContent = 'Add New Project';
+            document.getElementById('project-message').innerHTML = '';
+        }
+    </script>
+</body>
+</html>

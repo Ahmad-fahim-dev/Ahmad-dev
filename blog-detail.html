@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Post - Ahmad Fahim</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+            animation: fadeIn 1.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #333;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #fff, #aaa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .title {
+            font-size: 1.2rem;
+            color: #888;
+            margin-bottom: 10px;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        nav a {
+            color: #888;
+            text-decoration: none;
+            padding: 10px 25px;
+            border: 1px solid #444;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        nav a:hover, nav a.active {
+            color: #fff;
+            border-color: #fff;
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #888;
+            text-decoration: none;
+            padding: 8px 20px;
+            border: 1px solid #444;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            color: #fff;
+            border-color: #fff;
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .blog-detail {
+            background: rgba(255,255,255,0.03);
+            border-radius: 10px;
+            border-left: 3px solid #444;
+            padding: 30px;
+        }
+        
+        .blog-detail img {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
+        
+        .blog-detail h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #e0e0e0;
+        }
+        
+        .blog-detail .meta {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #333;
+        }
+        
+        .blog-detail .content {
+            color: #b0b0b0;
+            font-size: 1rem;
+            line-height: 1.8;
+            white-space: pre-wrap;
+        }
+        
+        .loading, .error-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #888;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AHMAD FAHIM</h1>
+            <div class="title">AI ML PYTHON DEVELOPER</div>
+        </header>
+        
+        <nav>
+            <a href="index.html">Portfolio</a>
+            <a href="blog.html">Blog</a>
+            <a href="projects.html">Projects</a>
+        </nav>
+
+        <a href="blog.html" class="back-btn">← Back to Blog</a>
+
+        <div id="blog-container">
+            <div class="loading">Loading blog post...</div>
+        </div>
+
+        <footer>
+            <p style="color: #666;">&copy; 2025 Ahmad Fahim. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:5000/api';
+        
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        async function fetchBlog() {
+            const blogId = getQueryParam('id');
+            const container = document.getElementById('blog-container');
+            
+            if (!blogId) {
+                container.innerHTML = '<div class="error-state"><p>Blog post not found.</p></div>';
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_URL}/blogs/${blogId}`);
+                
+                if (!response.ok) {
+                    container.innerHTML = '<div class="error-state"><p>Blog post not found.</p></div>';
+                    return;
+                }
+                
+                const blog = await response.json();
+                
+                container.innerHTML = `
+                    <div class="blog-detail">
+                        ${blog.image ? `<img src="http://localhost:5000${blog.image}" alt="${blog.title}" onerror="this.style.display='none'">` : ''}
+                        <h2>${blog.title}</h2>
+                        <div class="meta">
+                            By ${blog.author} • ${new Date(blog.createdAt).toLocaleDateString('en-US', { 
+                                year: 'numeric', 
+                                month: 'long', 
+                                day: 'numeric' 
+                            })}
+                            ${blog.updatedAt !== blog.createdAt ? ` (Updated: ${new Date(blog.updatedAt).toLocaleDateString('en-US', { 
+                                year: 'numeric', 
+                                month: 'long', 
+                                day: 'numeric' 
+                            })})` : ''}
+                        </div>
+                        <div class="content">${blog.content}</div>
+                    </div>
+                `;
+            } catch (error) {
+                console.error('Error fetching blog:', error);
+                container.innerHTML = '<div class="error-state"><p>Error loading blog post. Please make sure the server is running.</p></div>';
+            }
+        }
+
+        fetchBlog();
+    </script>
+</body>
+</html>

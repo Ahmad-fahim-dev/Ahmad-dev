@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Ahmad Fahim</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+            animation: fadeIn 1.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #333;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #fff, #aaa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .title {
+            font-size: 1.2rem;
+            color: #888;
+            margin-bottom: 10px;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        nav a {
+            color: #888;
+            text-decoration: none;
+            padding: 10px 25px;
+            border: 1px solid #444;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        nav a:hover, nav a.active {
+            color: #fff;
+            border-color: #fff;
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .section {
+            margin-bottom: 35px;
+            padding: 25px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 10px;
+            border-left: 3px solid #444;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        
+        .section:hover {
+            transform: translateX(5px);
+            border-color: #888;
+        }
+        
+        h2 {
+            color: #e0e0e0;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+        
+        .projects-grid {
+            display: grid;
+            gap: 25px;
+        }
+        
+        .project-card {
+            background: rgba(255,255,255,0.03);
+            border-radius: 10px;
+            border-left: 3px solid #444;
+            padding: 25px;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateX(5px);
+            border-color: #888;
+        }
+        
+        .project-card img {
+            width: 100%;
+            max-height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .project-card h3 {
+            color: #e0e0e0;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .project-card .description {
+            color: #b0b0b0;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .project-card .technologies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .project-card .tech-tag {
+            background: rgba(255,255,255,0.1);
+            color: #ccc;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+        
+        .project-card .links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .project-card .links a {
+            color: #888;
+            text-decoration: none;
+            padding: 8px 16px;
+            border: 1px solid #444;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+        
+        .project-card .links a:hover {
+            color: #fff;
+            border-color: #fff;
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .loading, .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #888;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AHMAD FAHIM</h1>
+            <div class="title">AI ML PYTHON DEVELOPER</div>
+        </header>
+        
+        <nav>
+            <a href="index.html">Portfolio</a>
+            <a href="blog.html">Blog</a>
+            <a href="projects.html" class="active">Projects</a>
+        </nav>
+
+        <div class="section">
+            <h2>My Projects</h2>
+            <p style="color: #b0b0b0;">
+                A collection of my work in AI, Machine Learning, Python development, and more.
+            </p>
+        </div>
+
+        <div id="projects-container" class="projects-grid">
+            <div class="loading">Loading projects...</div>
+        </div>
+
+        <footer>
+            <p style="color: #666;">&copy; 2025 Ahmad Fahim. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:5000/api';
+
+        async function fetchProjects() {
+            const container = document.getElementById('projects-container');
+            try {
+                const response = await fetch(`${API_URL}/projects`);
+                const projects = await response.json();
+                
+                if (projects.length === 0) {
+                    container.innerHTML = '<div class="empty-state"><p>No projects yet. Check back soon!</p></div>';
+                    return;
+                }
+
+                container.innerHTML = projects.map(project => `
+                    <div class="project-card">
+                        ${project.image ? `<img src="http://localhost:5000${project.image}" alt="${project.title}" onerror="this.style.display='none'">` : ''}
+                        <h3>${project.title}</h3>
+                        <div class="description">${project.description}</div>
+                        ${project.technologies && project.technologies.length > 0 ? `
+                            <div class="technologies">
+                                ${project.technologies.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
+                            </div>
+                        ` : ''}
+                        ${(project.githubLink || project.liveLink) ? `
+                            <div class="links">
+                                ${project.githubLink ? `<a href="${project.githubLink}" target="_blank" rel="noopener noreferrer">GitHub</a>` : ''}
+                                ${project.liveLink ? `<a href="${project.liveLink}" target="_blank" rel="noopener noreferrer">Live Demo</a>` : ''}
+                            </div>
+                        ` : ''}
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error fetching projects:', error);
+                container.innerHTML = '<div class="empty-state"><p>Error loading projects. Please make sure the server is running.</p></div>';
+            }
+        }
+
+        fetchProjects();
+    </script>
+</body>
+</html>
