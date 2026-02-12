@@ -1,5 +1,11 @@
 {
   "version": 2,
+  "builds": [
+    {
+      "src": "api/index.js",
+      "use": "@vercel/node"
+    }
+  ],
   "routes": [
     {
       "src": "/api/(.*)",
@@ -10,11 +16,20 @@
       "dest": "/api/index.js"
     },
     {
-      "handle": "filesystem"
+      "src": "/(admin|blog|projects|blog-detail|table).html",
+      "dest": "/$1.html"
+    },
+    {
+      "src": "/style.css",
+      "dest": "/style.css"
+    },
+    {
+      "src": "/AA.jpg",
+      "dest": "/AA.jpg"
     },
     {
       "src": "/(.*)",
-      "dest": "/$1"
+      "dest": "/index.html"
     }
   ]
 }
