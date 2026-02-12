@@ -20,6 +20,9 @@ coverage/
 .env.test.local
 .env.production.local
 
+# Local env file (contains passwords)
+.env.local
+
 # Uploads (keep folder but not files)
 uploads/*
 !uploads/.gitkeep
