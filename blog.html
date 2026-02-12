@@ -189,7 +189,7 @@
     </div>
 
     <script>
-        const API_URL = 'http://localhost:5000/api';
+        const API_URL = '/api';
 
         async function fetchBlogs() {
             const container = document.getElementById('blog-container');
@@ -204,7 +204,7 @@
 
                 container.innerHTML = blogs.map(blog => `
                     <a href="blog-detail.html?id=${blog.id}" class="blog-card">
-                        ${blog.image ? `<img src="http://localhost:5000${blog.image}" alt="${blog.title}" onerror="this.style.display='none'">` : ''}
+                        ${blog.image ? `<img src="${blog.image}" alt="${blog.title}" onerror="this.style.display='none'">` : ''}
                         <h3>${blog.title}</h3>
                         <div class="date">
                             ${new Date(blog.createdAt).toLocaleDateString('en-US', { 

@@ -169,7 +169,7 @@
     </div>
 
     <script>
-        const API_URL = 'http://localhost:5000/api';
+        const API_URL = '/api';
         
         function getQueryParam(param) {
             const urlParams = new URLSearchParams(window.location.search);
@@ -197,7 +197,7 @@
                 
                 container.innerHTML = `
                     <div class="blog-detail">
-                        ${blog.image ? `<img src="http://localhost:5000${blog.image}" alt="${blog.title}" onerror="this.style.display='none'">` : ''}
+                        ${blog.image ? `<img src="${blog.image}" alt="${blog.title}" onerror="this.style.display='none'">` : ''}
                         <h2>${blog.title}</h2>
                         <div class="meta">
                             By ${blog.author} • ${new Date(blog.createdAt).toLocaleDateString('en-US', { 

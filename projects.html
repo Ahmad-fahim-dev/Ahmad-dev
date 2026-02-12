@@ -216,7 +216,7 @@
     </div>
 
     <script>
-        const API_URL = 'http://localhost:5000/api';
+        const API_URL = '/api';
 
         async function fetchProjects() {
             const container = document.getElementById('projects-container');
@@ -231,7 +231,7 @@
 
                 container.innerHTML = projects.map(project => `
                     <div class="project-card">
-                        ${project.image ? `<img src="http://localhost:5000${project.image}" alt="${project.title}" onerror="this.style.display='none'">` : ''}
+                        ${project.image ? `<img src="${project.image}" alt="${project.title}" onerror="this.style.display='none'">` : ''}
                         <h3>${project.title}</h3>
                         <div class="description">${project.description}</div>
                         ${project.technologies && project.technologies.length > 0 ? `
