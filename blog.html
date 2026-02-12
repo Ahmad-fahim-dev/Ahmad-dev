@@ -157,6 +157,59 @@
             padding-top: 30px;
             border-top: 1px solid #333;
         }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .title {
+                font-size: 1rem;
+            }
+            
+            nav {
+                gap: 10px;
+            }
+            
+            nav a {
+                padding: 8px 15px;
+                font-size: 0.85rem;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            h2 {
+                font-size: 1.3rem;
+            }
+            
+            .blog-card {
+                padding: 20px;
+            }
+            
+            .blog-card h3 {
+                font-size: 1.1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            nav {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav a {
+                width: 100%;
+                max-width: 200px;
+                text-align: center;
+            }
+        }
     </style>
 </head>
 <body>
