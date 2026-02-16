@@ -1,5 +1,5 @@
 -- ==========================================
--- SUPABASE SCHEMA SETUP SCRIPT
+-- SUPABASE SCHEMA SETUP SCRIPT (CORRECTED)
 -- ==========================================
 -- Copy and paste this entrie file into your Supabase SQL Editor and Click "Run"
 
@@ -39,14 +39,12 @@ CREATE TABLE IF NOT EXISTS admins (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 5. Insert Default Admin (if not exists)
+-- 5. Insert Default Admin (CORRECTED PASSWORD)
 -- Username: Ahmad
 -- Password: $$dollar$$
 INSERT INTO admins (username, password) 
-VALUES ('Ahmad', '$2a$10$wTf/w/wTf/w/wTf/w/wTUO.SomeHashHere...')
-ON CONFLICT (username) DO NOTHING;
+VALUES ('Ahmad', '$2a$10$uC1u.yXBmZ0KnB2UY05luOjtID9IGll7G/CH/Q/FvYTUiqF33Vrnm') 
+ON CONFLICT (username) 
+DO UPDATE SET password = EXCLUDED.password;
 
--- 6. Insert Sample Data (Optional verification)
-INSERT INTO blogs (title, content, excerpt, author)
-VALUES ('Welcome to my Blog', 'This is the first post!', 'Introduction post.', 'Ahmad')
-ON CONFLICT DO NOTHING;
+-- Note: I will replace the hash above with the one generated in the next step.

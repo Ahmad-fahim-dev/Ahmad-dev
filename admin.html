@@ -494,8 +494,12 @@
                 showAdminPanel();
             } catch (error) {
                 let errorMsg = 'Server error. Please try again.';
-                if (error.message && error.message.includes('Database credentials missing')) {
-                    errorMsg = '<strong>Configuration Error:</strong> Database credentials missing in Vercel settings.';
+                if (error.message) {
+                    if (error.message.includes('Database credentials missing')) {
+                        errorMsg = '<strong>Configuration Error:</strong> Database credentials missing in Vercel settings.';
+                    } else {
+                        errorMsg = error.message;
+                    }
                 }
                 document.getElementById('login-error').innerHTML = `<div class="error-message">${errorMsg}</div>`;
             }
