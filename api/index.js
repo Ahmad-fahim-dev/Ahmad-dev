@@ -20,6 +20,7 @@ app.use(express.json());
 // Supabase Connection
 let supabase = null;
 let isConnected = false;
+let configMissing = false;
 
 if (SUPABASE_URL && SUPABASE_ANON_KEY) {
   try {
@@ -30,9 +31,12 @@ if (SUPABASE_URL && SUPABASE_ANON_KEY) {
     console.error('Supabase initialization error:', error.message);
   }
 } else {
-  console.log('No Supabase credentials provided, using local file storage');
+  console.log('No Supabase credentials provided');
   if (process.env.NODE_ENV === 'production') {
-    console.error('WARNING: Running in production without Supabase credentials! Data will be lost on restart.');
+    console.error('CRITICAL: Running in production without Supabase credentials!');
+    configMissing = true;
+  } else {
+    console.log('Using local file storage for development');
   }
 }
 
@@ -42,9 +46,9 @@ const blogsFile = path.join(dataDir, 'blogs.json');
 const projectsFile = path.join(dataDir, 'projects.json');
 const adminFile = path.join(dataDir, 'admin.json');
 
-// Ensure data directory exists
+// Ensure data directory exists (Local only)
 try {
-  if (!fs.existsSync(dataDir)) {
+  if (process.env.NODE_ENV !== 'production' && !fs.existsSync(dataDir)) {
     fs.mkdirSync(dataDir, { recursive: true });
   }
 } catch (err) {
@@ -112,6 +116,16 @@ const authenticateToken = (req, res, next) => {
     next();
   });
 };
+
+// Config Check Middleware for Production
+app.use((req, res, next) => {
+  if (configMissing && req.path.startsWith('/api')) {
+    return res.status(500).json({
+      error: 'Server Configuration Error: Database credentials missing in Vercel settings.'
+    });
+  }
+  next();
+});
 
 // ============== API ROUTES ==============
 
