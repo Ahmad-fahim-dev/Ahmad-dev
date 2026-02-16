@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,7 @@
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
             color: #ffffff;
@@ -19,25 +20,32 @@
             min-height: 100vh;
             animation: fadeIn 1.5s ease-in;
         }
-        
+
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 40px 20px;
         }
-        
+
         header {
             text-align: center;
             margin-bottom: 40px;
             padding-bottom: 30px;
             border-bottom: 1px solid #333;
         }
-        
+
         h1 {
             font-size: 2.5rem;
             margin-bottom: 10px;
@@ -46,16 +54,16 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        
+
         .login-container {
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 60vh;
         }
-        
+
         .login-box {
-            background: rgba(255,255,255,0.03);
+            background: rgba(255, 255, 255, 0.03);
             border-radius: 15px;
             border: 1px solid #333;
             padding: 40px;
@@ -63,48 +71,48 @@
             max-width: 400px;
             text-align: center;
         }
-        
+
         .login-box h2 {
             margin-bottom: 30px;
             font-size: 1.8rem;
             color: #e0e0e0;
         }
-        
+
         .form-group {
             margin-bottom: 20px;
             text-align: left;
         }
-        
+
         .form-group label {
             display: block;
             color: #ccc;
             margin-bottom: 8px;
             font-size: 0.9rem;
         }
-        
+
         .form-group input,
         .form-group textarea {
             width: 100%;
             padding: 12px 15px;
-            background: rgba(255,255,255,0.05);
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid #444;
             border-radius: 8px;
             color: #fff;
             font-size: 0.95rem;
             font-family: inherit;
         }
-        
+
         .form-group input:focus,
         .form-group textarea:focus {
             outline: none;
             border-color: #888;
         }
-        
+
         .form-group textarea {
             min-height: 150px;
             resize: vertical;
         }
-        
+
         .submit-btn {
             background: linear-gradient(90deg, #444, #666);
             color: #fff;
@@ -116,33 +124,33 @@
             width: 100%;
             transition: all 0.3s ease;
         }
-        
+
         .submit-btn:hover {
             background: linear-gradient(90deg, #555, #777);
         }
-        
+
         .error-message {
-            background: rgba(255,107,107,0.1);
+            background: rgba(255, 107, 107, 0.1);
             color: #ff6b6b;
             padding: 12px;
             border-radius: 8px;
             margin-bottom: 20px;
             font-size: 0.9rem;
         }
-        
+
         .success-message {
-            background: rgba(76,175,80,0.1);
+            background: rgba(76, 175, 80, 0.1);
             color: #4caf50;
             padding: 12px;
             border-radius: 8px;
             margin-bottom: 20px;
             font-size: 0.9rem;
         }
-        
+
         .admin-panel {
             display: none;
         }
-        
+
         .admin-header {
             display: flex;
             justify-content: space-between;
@@ -153,12 +161,12 @@
             flex-wrap: wrap;
             gap: 15px;
         }
-        
+
         .admin-nav {
             display: flex;
             gap: 15px;
         }
-        
+
         .admin-nav button {
             background: transparent;
             color: #888;
@@ -169,13 +177,14 @@
             transition: all 0.3s ease;
             font-size: 0.9rem;
         }
-        
-        .admin-nav button:hover, .admin-nav button.active {
+
+        .admin-nav button:hover,
+        .admin-nav button.active {
             color: #fff;
             border-color: #fff;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
         }
-        
+
         .logout-btn {
             background: transparent;
             color: #ff6b6b;
@@ -185,65 +194,65 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        
+
         .logout-btn:hover {
-            background: rgba(255,107,107,0.1);
+            background: rgba(255, 107, 107, 0.1);
         }
-        
+
         .section {
             margin-bottom: 35px;
             padding: 25px;
-            background: rgba(255,255,255,0.03);
+            background: rgba(255, 255, 255, 0.03);
             border-radius: 10px;
             border-left: 3px solid #444;
         }
-        
+
         h2 {
             color: #e0e0e0;
             margin-bottom: 15px;
             font-size: 1.4rem;
         }
-        
+
         h3 {
             color: #ccc;
             margin-bottom: 15px;
             font-size: 1.1rem;
         }
-        
+
         .items-list {
             margin-top: 30px;
         }
-        
+
         .item-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 15px 20px;
-            background: rgba(255,255,255,0.03);
+            background: rgba(255, 255, 255, 0.03);
             border-radius: 8px;
             margin-bottom: 10px;
             border-left: 3px solid #444;
         }
-        
+
         .item-row:hover {
             border-color: #888;
         }
-        
+
         .item-info h4 {
             color: #e0e0e0;
             margin-bottom: 5px;
         }
-        
+
         .item-info span {
             color: #888;
             font-size: 0.85rem;
         }
-        
+
         .item-actions {
             display: flex;
             gap: 10px;
         }
-        
+
         .item-actions button {
             background: transparent;
             border: 1px solid #444;
@@ -254,70 +263,73 @@
             font-size: 0.8rem;
             transition: all 0.3s ease;
         }
-        
+
         .item-actions button:hover {
             border-color: #fff;
             color: #fff;
         }
-        
+
         .item-actions button.delete {
             border-color: #ff6b6b;
             color: #ff6b6b;
         }
-        
+
         .item-actions button.delete:hover {
-            background: rgba(255,107,107,0.1);
+            background: rgba(255, 107, 107, 0.1);
         }
-        
-        .hidden { display: none; }
-        
+
+        .hidden {
+            display: none;
+        }
+
         /* Mobile Responsive */
         @media (max-width: 768px) {
             .container {
                 padding: 20px 15px;
             }
-            
+
             h1 {
                 font-size: 1.8rem;
             }
-            
+
             .login-box {
                 padding: 30px 20px;
             }
-            
+
             .admin-header {
                 flex-direction: column;
                 text-align: center;
             }
-            
+
             .admin-nav {
                 flex-wrap: wrap;
                 justify-content: center;
             }
-            
+
             .section {
                 padding: 20px;
             }
-            
+
             .item-row {
                 flex-direction: column;
                 gap: 15px;
                 text-align: center;
             }
-            
+
             .item-actions {
                 justify-content: center;
             }
         }
-        
+
         @media (max-width: 480px) {
             .admin-nav button {
                 width: 100%;
             }
-            
+
             .form-group input,
             .form-group textarea {
-                font-size: 16px; /* Prevents zoom on iOS */
+                font-size: 16px;
+                /* Prevents zoom on iOS */
             }
         }
     </style>
@@ -327,6 +339,7 @@
     </script>
     <script defer src="/_vercel/insights/script.js"></script>
 </head>
+
 <body>
     <div class="container">
         <header>
@@ -392,7 +405,8 @@
                             <input type="file" id="blog-image" accept="image/*">
                         </div>
                         <button type="submit" class="submit-btn">Save Blog</button>
-                        <button type="button" class="submit-btn" style="background: #444; margin-left: 10px;" onclick="resetBlogForm()">Cancel</button>
+                        <button type="button" class="submit-btn" style="background: #444; margin-left: 10px;"
+                            onclick="resetBlogForm()">Cancel</button>
                     </form>
                 </div>
 
@@ -434,7 +448,8 @@
                             <input type="file" id="project-image" accept="image/*">
                         </div>
                         <button type="submit" class="submit-btn">Save Project</button>
-                        <button type="button" class="submit-btn" style="background: #444; margin-left: 10px;" onclick="resetProjectForm()">Cancel</button>
+                        <button type="button" class="submit-btn" style="background: #444; margin-left: 10px;"
+                            onclick="resetProjectForm()">Cancel</button>
                     </form>
                 </div>
 
@@ -460,27 +475,29 @@
             e.preventDefault();
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
-            
+
             try {
                 const response = await fetch(`${API_URL}/admin/login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username, password })
                 });
-                
-                const data = await response.json();
-                
-                if (response.ok) {
-                    authToken = data.token;
-                    localStorage.setItem('adminToken', authToken);
-                    showAdminPanel();
-                } else {
-                    document.getElementById('login-error').innerHTML = 
-                        `<div class="error-message">${data.error || 'Login failed'}</div>`;
+
+                const data = await response.json().catch(() => ({}));
+
+                if (!response.ok) {
+                    throw new Error(data.error || `Server error: ${response.status}`);
                 }
+
+                authToken = data.token;
+                localStorage.setItem('adminToken', authToken);
+                showAdminPanel();
             } catch (error) {
-                document.getElementById('login-error').innerHTML = 
-                    `<div class="error-message">Server error. Please try again.</div>`;
+                let errorMsg = 'Server error. Please try again.';
+                if (error.message && error.message.includes('Database credentials missing')) {
+                    errorMsg = '<strong>Configuration Error:</strong> Database credentials missing in Vercel settings.';
+                }
+                document.getElementById('login-error').innerHTML = `<div class="error-message">${errorMsg}</div>`;
             }
         });
 
@@ -501,7 +518,7 @@
             document.getElementById(`${tab}-tab`).classList.remove('hidden');
             document.querySelectorAll('.admin-nav button').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
-            
+
             if (tab === 'blogs') loadBlogs();
             if (tab === 'projects') loadProjects();
         }
@@ -510,9 +527,13 @@
         async function loadBlogs() {
             try {
                 const response = await fetch(`${API_URL}/blogs`);
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(errorData.error || `Server error: ${response.status}`);
+                }
                 const blogs = await response.json();
-                
-                document.getElementById('blogs-list').innerHTML = blogs.length === 0 
+
+                document.getElementById('blogs-list').innerHTML = blogs.length === 0
                     ? '<p style="color: #888; text-align: center;">No blogs yet.</p>'
                     : blogs.map(blog => `
                         <div class="item-row">
@@ -528,6 +549,8 @@
                     `).join('');
             } catch (error) {
                 console.error('Error loading blogs:', error);
+                const errorMsg = error.message || 'Error loading blogs';
+                document.getElementById('blogs-list').innerHTML = `<div class="error-message">${errorMsg}</div>`;
             }
         }
 
@@ -538,33 +561,33 @@
             formData.append('content', document.getElementById('blog-content').value);
             formData.append('excerpt', document.getElementById('blog-excerpt').value);
             formData.append('author', document.getElementById('blog-author').value);
-            
+
             const imageFile = document.getElementById('blog-image').files[0];
             if (imageFile) formData.append('image', imageFile);
-            
+
             const blogId = document.getElementById('blog-id').value;
             const url = blogId ? `${API_URL}/blogs/${blogId}` : `${API_URL}/blogs`;
             const method = blogId ? 'PUT' : 'POST';
-            
+
             try {
                 const response = await fetch(url, {
                     method,
                     headers: { 'Authorization': `Bearer ${authToken}` },
                     body: formData
                 });
-                
+
                 if (response.ok) {
-                    document.getElementById('blog-message').innerHTML = 
+                    document.getElementById('blog-message').innerHTML =
                         `<div class="success-message">Blog saved successfully!</div>`;
                     resetBlogForm();
                     loadBlogs();
                 } else {
                     const data = await response.json();
-                    document.getElementById('blog-message').innerHTML = 
+                    document.getElementById('blog-message').innerHTML =
                         `<div class="error-message">${data.error}</div>`;
                 }
             } catch (error) {
-                document.getElementById('blog-message').innerHTML = 
+                document.getElementById('blog-message').innerHTML =
                     `<div class="error-message">Error saving blog</div>`;
             }
         });
@@ -573,7 +596,7 @@
             try {
                 const response = await fetch(`${API_URL}/blogs/${id}`);
                 const blog = await response.json();
-                
+
                 document.getElementById('blog-id').value = blog.id;
                 document.getElementById('blog-title').value = blog.title;
                 document.getElementById('blog-content').value = blog.content;
@@ -587,7 +610,7 @@
 
         async function deleteBlog(id) {
             if (!confirm('Are you sure you want to delete this blog?')) return;
-            
+
             try {
                 await fetch(`${API_URL}/blogs/${id}`, {
                     method: 'DELETE',
@@ -610,9 +633,13 @@
         async function loadProjects() {
             try {
                 const response = await fetch(`${API_URL}/projects`);
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(errorData.error || `Server error: ${response.status}`);
+                }
                 const projects = await response.json();
-                
-                document.getElementById('projects-list').innerHTML = projects.length === 0 
+
+                document.getElementById('projects-list').innerHTML = projects.length === 0
                     ? '<p style="color: #888; text-align: center;">No projects yet.</p>'
                     : projects.map(project => `
                         <div class="item-row">
@@ -628,6 +655,8 @@
                     `).join('');
             } catch (error) {
                 console.error('Error loading projects:', error);
+                const errorMsg = error.message || 'Error loading projects';
+                document.getElementById('projects-list').innerHTML = `<div class="error-message">${errorMsg}</div>`;
             }
         }
 
@@ -639,33 +668,33 @@
             formData.append('technologies', document.getElementById('project-technologies').value);
             formData.append('githubLink', document.getElementById('project-github').value);
             formData.append('liveLink', document.getElementById('project-live').value);
-            
+
             const imageFile = document.getElementById('project-image').files[0];
             if (imageFile) formData.append('image', imageFile);
-            
+
             const projectId = document.getElementById('project-id').value;
             const url = projectId ? `${API_URL}/projects/${projectId}` : `${API_URL}/projects`;
             const method = projectId ? 'PUT' : 'POST';
-            
+
             try {
                 const response = await fetch(url, {
                     method,
                     headers: { 'Authorization': `Bearer ${authToken}` },
                     body: formData
                 });
-                
+
                 if (response.ok) {
-                    document.getElementById('project-message').innerHTML = 
+                    document.getElementById('project-message').innerHTML =
                         `<div class="success-message">Project saved successfully!</div>`;
                     resetProjectForm();
                     loadProjects();
                 } else {
                     const data = await response.json();
-                    document.getElementById('project-message').innerHTML = 
+                    document.getElementById('project-message').innerHTML =
                         `<div class="error-message">${data.error}</div>`;
                 }
             } catch (error) {
-                document.getElementById('project-message').innerHTML = 
+                document.getElementById('project-message').innerHTML =
                     `<div class="error-message">Error saving project</div>`;
             }
         });
@@ -674,7 +703,7 @@
             try {
                 const response = await fetch(`${API_URL}/projects/${id}`);
                 const project = await response.json();
-                
+
                 document.getElementById('project-id').value = project.id;
                 document.getElementById('project-title').value = project.title;
                 document.getElementById('project-description').value = project.description;
@@ -689,7 +718,7 @@
 
         async function deleteProject(id) {
             if (!confirm('Are you sure you want to delete this project?')) return;
-            
+
             try {
                 await fetch(`${API_URL}/projects/${id}`, {
                     method: 'DELETE',
@@ -709,4 +738,5 @@
         }
     </script>
 </body>
+
 </html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,7 @@
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
             color: #ffffff;
@@ -19,25 +20,32 @@
             min-height: 100vh;
             animation: fadeIn 1.5s ease-in;
         }
-        
+
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        
+
         .container {
             max-width: 900px;
             margin: 0 auto;
             padding: 40px 20px;
         }
-        
+
         header {
             text-align: center;
             margin-bottom: 40px;
             padding-bottom: 30px;
             border-bottom: 1px solid #333;
         }
-        
+
         h1 {
             font-size: 2.5rem;
             margin-bottom: 10px;
@@ -46,13 +54,13 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        
+
         .title {
             font-size: 1.2rem;
             color: #888;
             margin-bottom: 10px;
         }
-        
+
         nav {
             display: flex;
             justify-content: center;
@@ -60,7 +68,7 @@
             margin-bottom: 30px;
             flex-wrap: wrap;
         }
-        
+
         nav a {
             color: #888;
             text-decoration: none;
@@ -70,51 +78,52 @@
             transition: all 0.3s ease;
             font-size: 0.9rem;
         }
-        
-        nav a:hover, nav a.active {
+
+        nav a:hover,
+        nav a.active {
             color: #fff;
             border-color: #fff;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
         }
-        
+
         .section {
             margin-bottom: 35px;
             padding: 25px;
-            background: rgba(255,255,255,0.03);
+            background: rgba(255, 255, 255, 0.03);
             border-radius: 10px;
             border-left: 3px solid #444;
             transition: transform 0.3s ease, border-color 0.3s ease;
         }
-        
+
         .section:hover {
             transform: translateX(5px);
             border-color: #888;
         }
-        
+
         h2 {
             color: #e0e0e0;
             margin-bottom: 15px;
             font-size: 1.4rem;
         }
-        
+
         .projects-grid {
             display: grid;
             gap: 25px;
         }
-        
+
         .project-card {
-            background: rgba(255,255,255,0.03);
+            background: rgba(255, 255, 255, 0.03);
             border-radius: 10px;
             border-left: 3px solid #444;
             padding: 25px;
             transition: transform 0.3s ease, border-color 0.3s ease;
         }
-        
+
         .project-card:hover {
             transform: translateX(5px);
             border-color: #888;
         }
-        
+
         .project-card img {
             width: 100%;
             max-height: 200px;
@@ -122,40 +131,40 @@
             border-radius: 8px;
             margin-bottom: 15px;
         }
-        
+
         .project-card h3 {
             color: #e0e0e0;
             margin-bottom: 10px;
             font-size: 1.2rem;
         }
-        
+
         .project-card .description {
             color: #b0b0b0;
             font-size: 0.95rem;
             margin-bottom: 15px;
             line-height: 1.6;
         }
-        
+
         .project-card .technologies {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
             margin-bottom: 15px;
         }
-        
+
         .project-card .tech-tag {
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
             color: #ccc;
             padding: 4px 12px;
             border-radius: 15px;
             font-size: 0.8rem;
         }
-        
+
         .project-card .links {
             display: flex;
             gap: 15px;
         }
-        
+
         .project-card .links a {
             color: #888;
             text-decoration: none;
@@ -165,87 +174,88 @@
             font-size: 0.85rem;
             transition: all 0.3s ease;
         }
-        
+
         .project-card .links a:hover {
             color: #fff;
             border-color: #fff;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
         }
-        
-        .loading, .empty-state {
+
+        .loading,
+        .empty-state {
             text-align: center;
             padding: 40px;
             color: #888;
         }
-        
+
         footer {
             text-align: center;
             margin-top: 50px;
             padding-top: 30px;
             border-top: 1px solid #333;
         }
-        
+
         /* Mobile Responsive */
         @media (max-width: 768px) {
             .container {
                 padding: 20px 15px;
             }
-            
+
             h1 {
                 font-size: 1.8rem;
             }
-            
+
             .title {
                 font-size: 1rem;
             }
-            
+
             nav {
                 gap: 10px;
             }
-            
+
             nav a {
                 padding: 8px 15px;
                 font-size: 0.85rem;
             }
-            
+
             .section {
                 padding: 20px;
             }
-            
+
             h2 {
                 font-size: 1.3rem;
             }
-            
+
             .project-card {
                 padding: 20px;
             }
-            
+
             .project-card h3 {
                 font-size: 1.1rem;
             }
-            
+
             .project-card .links {
                 flex-direction: column;
                 gap: 10px;
             }
-            
+
             .project-card .links a {
                 text-align: center;
             }
         }
-        
+
         @media (max-width: 480px) {
             nav {
                 flex-direction: column;
                 align-items: center;
             }
-            
+
             nav a {
                 width: 100%;
                 max-width: 200px;
                 text-align: center;
             }
-            
+
             .technologies {
                 justify-content: center;
             }
@@ -257,13 +267,14 @@
     </script>
     <script defer src="/_vercel/insights/script.js"></script>
 </head>
+
 <body>
     <div class="container">
         <header>
             <h1>AHMAD FAHIM</h1>
             <div class="title">AI ML PYTHON DEVELOPER</div>
         </header>
-        
+
         <nav>
             <a href="index.html">Portfolio</a>
             <a href="blog.html">Blog</a>
@@ -293,8 +304,14 @@
             const container = document.getElementById('projects-container');
             try {
                 const response = await fetch(`${API_URL}/projects`);
+
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(errorData.error || `Server error: ${response.status}`);
+                }
+
                 const projects = await response.json();
-                
+
                 if (projects.length === 0) {
                     container.innerHTML = '<div class="empty-state"><p>No projects yet. Check back soon!</p></div>';
                     return;
@@ -320,11 +337,26 @@
                 `).join('');
             } catch (error) {
                 console.error('Error fetching projects:', error);
-                container.innerHTML = '<div class="empty-state"><p>Error loading projects. Please make sure the server is running.</p></div>';
+                const errorMsg = error.message || 'Error loading projects. Please make sure the server is running.';
+
+                let displayMsg = `<div class="empty-state">
+                    <p style="color: #ff6b6b; margin-bottom: 10px;">⚠️ ${errorMsg}</p>`;
+
+                if (errorMsg.includes('Database credentials missing')) {
+                    displayMsg += `<p style="font-size: 0.9em; color: #888;">
+                        <strong>Vercel Setup Required:</strong><br>
+                        Go to Vercel Project Settings > Environment Variables<br>
+                        Add: <code>SUPABASE_URL</code>, <code>SUPABASE_ANON_KEY</code>, <code>JWT_SECRET</code>
+                    </p>`;
+                }
+
+                displayMsg += `</div>`;
+                container.innerHTML = displayMsg;
             }
         }
 
         fetchProjects();
     </script>
 </body>
+
 </html>

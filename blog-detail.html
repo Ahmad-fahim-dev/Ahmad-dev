@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,7 @@
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
             color: #ffffff;
@@ -19,25 +20,32 @@
             min-height: 100vh;
             animation: fadeIn 1.5s ease-in;
         }
-        
+
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        
+
         .container {
             max-width: 900px;
             margin: 0 auto;
             padding: 40px 20px;
         }
-        
+
         header {
             text-align: center;
             margin-bottom: 40px;
             padding-bottom: 30px;
             border-bottom: 1px solid #333;
         }
-        
+
         h1 {
             font-size: 2.5rem;
             margin-bottom: 10px;
@@ -46,13 +54,13 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        
+
         .title {
             font-size: 1.2rem;
             color: #888;
             margin-bottom: 10px;
         }
-        
+
         nav {
             display: flex;
             justify-content: center;
@@ -60,7 +68,7 @@
             margin-bottom: 30px;
             flex-wrap: wrap;
         }
-        
+
         nav a {
             color: #888;
             text-decoration: none;
@@ -70,13 +78,14 @@
             transition: all 0.3s ease;
             font-size: 0.9rem;
         }
-        
-        nav a:hover, nav a.active {
+
+        nav a:hover,
+        nav a.active {
             color: #fff;
             border-color: #fff;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
         }
-        
+
         .back-btn {
             display: inline-block;
             margin-bottom: 20px;
@@ -87,20 +96,20 @@
             border-radius: 20px;
             transition: all 0.3s ease;
         }
-        
+
         .back-btn:hover {
             color: #fff;
             border-color: #fff;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
         }
-        
+
         .blog-detail {
-            background: rgba(255,255,255,0.03);
+            background: rgba(255, 255, 255, 0.03);
             border-radius: 10px;
             border-left: 3px solid #444;
             padding: 30px;
         }
-        
+
         .blog-detail img {
             width: 100%;
             max-height: 400px;
@@ -108,13 +117,13 @@
             border-radius: 10px;
             margin-bottom: 25px;
         }
-        
+
         .blog-detail h2 {
             font-size: 1.8rem;
             margin-bottom: 15px;
             color: #e0e0e0;
         }
-        
+
         .blog-detail .meta {
             color: #888;
             font-size: 0.9rem;
@@ -122,74 +131,75 @@
             padding-bottom: 20px;
             border-bottom: 1px solid #333;
         }
-        
+
         .blog-detail .content {
             color: #b0b0b0;
             font-size: 1rem;
             line-height: 1.8;
             white-space: pre-wrap;
         }
-        
-        .loading, .error-state {
+
+        .loading,
+        .error-state {
             text-align: center;
             padding: 60px 20px;
             color: #888;
         }
-        
+
         footer {
             text-align: center;
             margin-top: 50px;
             padding-top: 30px;
             border-top: 1px solid #333;
         }
-        
+
         /* Mobile Responsive */
         @media (max-width: 768px) {
             .container {
                 padding: 20px 15px;
             }
-            
+
             h1 {
                 font-size: 1.8rem;
             }
-            
+
             .title {
                 font-size: 1rem;
             }
-            
+
             nav {
                 gap: 10px;
             }
-            
+
             nav a {
                 padding: 8px 15px;
                 font-size: 0.85rem;
             }
-            
+
             .blog-detail {
                 padding: 20px;
             }
-            
+
             .blog-detail h2 {
                 font-size: 1.4rem;
             }
-            
+
             .blog-detail img {
                 max-height: 250px;
             }
-            
+
             .back-btn {
                 padding: 6px 15px;
                 font-size: 0.9rem;
             }
         }
-        
+
         @media (max-width: 480px) {
             nav {
                 flex-direction: column;
                 align-items: center;
             }
-            
+
             nav a {
                 width: 100%;
                 max-width: 200px;
@@ -203,13 +213,14 @@
     </script>
     <script defer src="/_vercel/insights/script.js"></script>
 </head>
+
 <body>
     <div class="container">
         <header>
             <h1>AHMAD FAHIM</h1>
             <div class="title">AI ML PYTHON DEVELOPER</div>
         </header>
-        
+
         <nav>
             <a href="index.html">Portfolio</a>
             <a href="blog.html">Blog</a>
@@ -229,7 +240,7 @@
 
     <script>
         const API_URL = '/api';
-        
+
         function getQueryParam(param) {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(param);
@@ -238,48 +249,68 @@
         async function fetchBlog() {
             const blogId = getQueryParam('id');
             const container = document.getElementById('blog-container');
-            
+
             if (!blogId) {
                 container.innerHTML = '<div class="error-state"><p>Blog post not found.</p></div>';
                 return;
             }
-            
+
             try {
                 const response = await fetch(`${API_URL}/blogs/${blogId}`);
-                
+
                 if (!response.ok) {
-                    container.innerHTML = '<div class="error-state"><p>Blog post not found.</p></div>';
-                    return;
+                    if (response.status === 404) {
+                        container.innerHTML = '<div class="error-state"><p>Blog post not found.</p></div>';
+                        return;
+                    }
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(errorData.error || `Server error: ${response.status}`);
                 }
-                
+
                 const blog = await response.json();
-                
+
                 container.innerHTML = `
                     <div class="blog-detail">
                         ${blog.image ? `<img src="${blog.image}" alt="${blog.title}" onerror="this.style.display='none'">` : ''}
                         <h2>${blog.title}</h2>
                         <div class="meta">
-                            By ${blog.author} • ${new Date(blog.createdAt).toLocaleDateString('en-US', { 
-                                year: 'numeric', 
-                                month: 'long', 
-                                day: 'numeric' 
-                            })}
-                            ${blog.updatedAt !== blog.createdAt ? ` (Updated: ${new Date(blog.updatedAt).toLocaleDateString('en-US', { 
-                                year: 'numeric', 
-                                month: 'long', 
-                                day: 'numeric' 
-                            })})` : ''}
+                            By ${blog.author} • ${new Date(blog.createdAt).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                })}
+                            ${blog.updatedAt !== blog.createdAt ? ` (Updated: ${new Date(blog.updatedAt).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                })})` : ''}
                         </div>
                         <div class="content">${blog.content}</div>
                     </div>
                 `;
             } catch (error) {
                 console.error('Error fetching blog:', error);
-                container.innerHTML = '<div class="error-state"><p>Error loading blog post. Please make sure the server is running.</p></div>';
+
+                const errorMsg = error.message || 'Error loading blog post. Please make sure the server is running.';
+                let displayMsg = `<div class="error-state">
+                    <h2 style="color: #ff6b6b; margin-bottom: 20px;">⚠️ Error</h2>
+                    <p>${errorMsg}</p>`;
+
+                if (errorMsg.includes('Database credentials missing')) {
+                    displayMsg += `<p style="margin-top: 20px; color: #888; font-size: 0.9em;">
+                        <strong>Vercel Setup Required:</strong><br>
+                        Check Environment Variables in Vercel Settings.
+                    </p>`;
+                }
+
+                displayMsg += `<a href="blog.html" class="back-btn" style="display: inline-block; margin-top: 20px;">← Back to Blog</a></div>`;
+
+                container.innerHTML = displayMsg;
             }
         }
 
         fetchBlog();
     </script>
 </body>
+
 </html>
