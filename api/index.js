@@ -203,7 +203,7 @@ app.get('/api/blogs', async (req, res) => {
     res.json(blogs);
   } catch (error) {
     console.error('Error fetching blogs:', error);
-    res.status(500).json({ error: 'Server error' });
+    res.status(500).json({ error: error.message || 'Server error' });
   }
 });
 
@@ -242,7 +242,7 @@ app.get('/api/blogs/:id', async (req, res) => {
     res.json(blog);
   } catch (error) {
     console.error('Error fetching blog:', error);
-    res.status(500).json({ error: 'Server error' });
+    res.status(500).json({ error: error.message || 'Server error' });
   }
 });
 
@@ -290,7 +290,7 @@ app.post('/api/blogs', authenticateToken, upload.single('image'), async (req, re
     }
   } catch (error) {
     console.error('Error creating blog:', error);
-    res.status(500).json({ error: 'Server error' });
+    res.status(500).json({ error: error.message || 'Server error' });
   }
 });
 
@@ -350,7 +350,7 @@ app.put('/api/blogs/:id', authenticateToken, upload.single('image'), async (req,
     res.json(blog);
   } catch (error) {
     console.error('Error updating blog:', error);
-    res.status(500).json({ error: 'Server error' });
+    res.status(500).json({ error: error.message || 'Server error' });
   }
 });
 
@@ -373,7 +373,7 @@ app.delete('/api/blogs/:id', authenticateToken, async (req, res) => {
     res.json({ message: 'Blog deleted successfully' });
   } catch (error) {
     console.error('Error deleting blog:', error);
-    res.status(500).json({ error: 'Server error' });
+    res.status(500).json({ error: error.message || 'Server error' });
   }
 });
 
@@ -407,7 +407,7 @@ app.get('/api/projects', async (req, res) => {
     res.json(projects);
   } catch (error) {
     console.error('Error fetching projects:', error);
-    res.status(500).json({ error: 'Server error' });
+    res.status(500).json({ error: error.message || 'Server error' });
   }
 });
 
@@ -447,7 +447,7 @@ app.get('/api/projects/:id', async (req, res) => {
     res.json(project);
   } catch (error) {
     console.error('Error fetching project:', error);
-    res.status(500).json({ error: 'Server error' });
+    res.status(500).json({ error: error.message || 'Server error' });
   }
 });
 
@@ -502,7 +502,7 @@ app.post('/api/projects', authenticateToken, upload.single('image'), async (req,
     }
   } catch (error) {
     console.error('Error creating project:', error);
-    res.status(500).json({ error: 'Server error' });
+    res.status(500).json({ error: error.message || 'Server error' });
   }
 });
 
@@ -571,7 +571,7 @@ app.put('/api/projects/:id', authenticateToken, upload.single('image'), async (r
     res.json(project);
   } catch (error) {
     console.error('Error updating project:', error);
-    res.status(500).json({ error: 'Server error' });
+    res.status(500).json({ error: error.message || 'Server error' });
   }
 });
 
@@ -594,7 +594,7 @@ app.delete('/api/projects/:id', authenticateToken, async (req, res) => {
     res.json({ message: 'Project deleted successfully' });
   } catch (error) {
     console.error('Error deleting project:', error);
-    res.status(500).json({ error: 'Server error' });
+    res.status(500).json({ error: error.message || 'Server error' });
   }
 });
 
