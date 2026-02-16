@@ -403,26 +403,19 @@ footer {
     text-transform: uppercase;
 }
 
-/* Responsive */
-@media (max-width: 900px) {
+/* Responsive Optimization */
+@media (max-width: 1024px) {
     .page-wrapper {
-        padding: 30px;
+        padding: 40px;
     }
 
-    .hero {
+    .huge-title {
+        font-size: clamp(3rem, 12vw, 6rem);
+    }
+
+    .about-grid {
         grid-template-columns: 1fr;
-        text-align: center;
-    }
-
-    .hero-image {
-        order: -1;
-    }
-
-    .about-grid,
-    .editorial-grid,
-    .contact-container {
-        grid-template-columns: 1fr;
-        gap: 40px;
+        gap: 30px;
     }
 
     .about-intro {
@@ -435,13 +428,87 @@ footer {
     .about-text {
         column-count: 1;
     }
+}
 
-    .huge-title {
-        font-size: 4rem;
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .page-wrapper {
+        padding: 25px;
+        box-shadow: 5px 5px 0px var(--shadow-color);
     }
 
     .nav-container {
         flex-direction: column;
         gap: 20px;
+        text-align: center;
+    }
+
+    .nav-links {
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        margin-bottom: 60px;
+    }
+
+    .hero-image {
+        order: -1;
+        margin-bottom: 20px;
+    }
+
+    .hero-image img {
+        width: 220px;
+        height: 220px;
+    }
+
+    .subtitle {
+        font-size: 1.5rem;
+    }
+
+    .huge-title {
+        font-size: 3.5rem;
+    }
+
+    section h2 {
+        font-size: 2.5rem;
+    }
+
+    .editorial-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .contact-container {
+        grid-template-columns: 1fr;
+    }
+
+    .btn-label {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .huge-title {
+        font-size: 2.8rem;
+    }
+
+    .page-wrapper {
+        padding: 15px;
+    }
+
+    .nav-links {
+        gap: 15px;
+    }
+
+    .nav-links a {
+        font-size: 0.85rem;
     }
 }
