@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS admins (
 -- Username: Ahmad
 -- Password: $$dollar$$
 INSERT INTO admins (username, password) 
-VALUES ('Ahmad', '$2a$10$uC1u.yXBmZ0KnB2UY05luOjtID9IGll7G/CH/Q/FvYTUiqF33Vrnm') 
+VALUES ('Ahmad', '$2a$10$6QlmFSDwc8b6qh9V6Oom3OpU/XJqIhjh6ZS0Z1KEkOuAPYP833jbm')  
 ON CONFLICT (username) 
 DO UPDATE SET password = EXCLUDED.password;
 
