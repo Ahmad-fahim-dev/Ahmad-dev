@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work Archive — Ahmad Fahim</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Vercel Web Analytics -->
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
+</head>
+
+<body>
+    <div class="page-wrapper">
+        <header>
+            <nav>
+                <div class="nav-container">
+                    <div class="nav-links">
+                        <a href="index.html">Cover</a>
+                        <a href="index.html#about">About</a>
+                        <a href="index.html#skills">Skills</a>
+                        <a href="projects.html" class="active">Work</a>
+                        <a href="blog.html">Articles</a>
+                        <a href="index.html#contact">Contact</a>
+                    </div>
+                    <button class="theme-toggle" id="theme-toggle">Dark Mode</button>
+                </div>
+            </nav>
+        </header>
+
+        <section id="projects-header">
+            <h1 class="huge-title">WORK<br>ARCHIVE</h1>
+            <div class="tagline-box">
+                A COLLECTION OF TECHNICAL IMPLEMENTATIONS AND AI RESEARCH
+            </div>
+        </section>
+
+        <div class="hr-double"></div>
+
+        <div id="projects-container" class="editorial-grid">
+            <div style="font-family: 'Special Elite';">Loading dispatch from server...</div>
+        </div>
+
+        <footer>
+            <div>&copy; 1925-2025 AHMAD FAHIM</div>
+            <div>PRINTED IN GLOBAL NETWORK</div>
+            <div>VOL. VIII</div>
+        </footer>
+    </div>
+
+    <script>
+        const API_URL = '/api';
+
+        async function fetchProjects() {
+            const container = document.getElementById('projects-container');
+            try {
+                const response = await fetch(`${API_URL}/projects`);
+
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(errorData.error || `Server error: ${response.status}`);
+                }
+
+                const projects = await response.json();
+
+                if (projects.length === 0) {
+                    container.innerHTML = '<div style="font-family: \'Special Elite\'; grid-column: span 2;">NO RECORDS FOUND IN ARCHIVE.</div>';
+                    return;
+                }
+
+                container.innerHTML = projects.map(project => `
+                    <div class="editorial-block">
+                        ${project.image ? `<img src="${project.image}" alt="${project.title}" onerror="this.style.display='none'">` : ''}
+                        <div class="meta">${project.technologies ? project.technologies.join(' / ') : 'GENERAL'}</div>
+                        <h3>${project.title}</h3>
+                        <p>${project.description}</p>
+                        <div style="display: flex; gap: 15px;">
+                            ${project.githubLink ? `<a href="${project.githubLink}" target="_blank" class="read-more">SOURCE CODE</a>` : ''}
+                            ${project.liveLink ? `<a href="${project.liveLink}" target="_blank" class="read-more">LIVE DEMO</a>` : ''}
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error fetching projects:', error);
+                container.innerHTML = `<div style="font-family: 'Special Elite'; grid-column: span 2; color: #d9534f;">⚠️ ERROR RETRIEVING ARCHIVE: ${error.message}</div>`;
+            }
+        }
+
+        fetchProjects();
+
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            body.classList.add('dark-mode');
+            themeToggle.textContent = 'Light Mode';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            const isDark = body.classList.contains('dark-mode');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            themeToggle.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+        });
+    </script>
+</body>
+
+</html>
