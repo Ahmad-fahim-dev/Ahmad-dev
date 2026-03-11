@@ -5,6 +5,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Article Detail — Ahmad Fahim</title>
+
+    <!-- Primary Meta Tags -->
+    <meta name="title" id="meta-title" content="Article Detail — Ahmad Fahim">
+    <meta name="description" id="meta-desc"
+        content="Read this article by Ahmad Fahim regarding Artificial Intelligence and Python development.">
+    <meta name="author" id="meta-author" content="Ahmad Fahim">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" id="meta-og-url" content="https://ahmad-dev-mtwo.vercel.app/blog-detail.html">
+    <meta property="og:title" id="meta-og-title" content="Article Detail — Ahmad Fahim">
+    <meta property="og:description" id="meta-og-desc"
+        content="Read this article by Ahmad Fahim regarding Artificial Intelligence and Python development.">
+    <meta property="og:image" id="meta-og-image" content="https://ahmad-dev-mtwo.vercel.app/AA.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" id="meta-twitter-url" content="https://ahmad-dev-mtwo.vercel.app/blog-detail.html">
+    <meta property="twitter:title" id="meta-twitter-title" content="Article Detail — Ahmad Fahim">
+    <meta property="twitter:description" id="meta-twitter-desc"
+        content="Read this article by Ahmad Fahim regarding Artificial Intelligence and Python development.">
+    <meta property="twitter:image" id="meta-twitter-image" content="https://ahmad-dev-mtwo.vercel.app/AA.jpg">
+
     <link rel="stylesheet" href="style.css">
     <!-- Vercel Web Analytics -->
     <script>
@@ -239,6 +262,27 @@
                 }
 
                 const blog = await response.json();
+
+                // Dynamically update SEO meta tags
+                document.title = `${blog.title} — Ahmad Fahim`;
+                document.getElementById('meta-title').content = blog.title;
+                document.getElementById('meta-og-title').content = blog.title;
+                document.getElementById('meta-twitter-title').content = blog.title;
+
+                if (blog.excerpt) {
+                    document.getElementById('meta-desc').content = blog.excerpt;
+                    document.getElementById('meta-og-desc').content = blog.excerpt;
+                    document.getElementById('meta-twitter-desc').content = blog.excerpt;
+                }
+
+                if (blog.image) {
+                    document.getElementById('meta-og-image').content = blog.image;
+                    document.getElementById('meta-twitter-image').content = blog.image;
+                }
+
+                document.getElementById('meta-og-url').content = window.location.href;
+                document.getElementById('meta-twitter-url').content = window.location.href;
+                document.getElementById('meta-author').content = blog.author;
 
                 container.innerHTML = `
                     <article>

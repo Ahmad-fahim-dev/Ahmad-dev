@@ -8,14 +8,68 @@ const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+// Security dependencies
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+const xss = require('xss-clean');
+const hpp = require('hpp');
+
 const app = express();
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
 
 // Middleware
-app.use(cors());
-app.use(express.json());
+// Security headers
+app.use(helmet({
+  contentSecurityPolicy: false, // Disabled for simplicity if loading external images/scripts (like Supabase, fonts, analytics)
+  crossOriginEmbedderPolicy: false
+}));
+
+// CORS
+// Only allow localhost and specific Vercel domains in production
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:5000',
+  'https://ahmad-dev-mtwo.vercel.app',
+  process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null
+].filter(Boolean);
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+}));
+
+// Body parser
+app.use(express.json({ limit: '10kb' })); // Limit body payload size
+
+// Data sanitization against XSS
+app.use(xss());
+
+// Prevent HTTP parameter pollution
+app.use(hpp());
+
+// General API Rate Limiting
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per windowMs
+  message: 'Too many requests from this IP, please try again in 15 minutes.',
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+app.use('/api/', limiter);
+
+// Stricter Rate Limiting for Login
+const loginLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour
+  max: 5, // Limit each IP to 5 login requests per hour
+  message: 'Too many login attempts from this IP, please try again after an hour.'
+});
 
 // Supabase Connection
 let supabase = null;
@@ -130,7 +184,7 @@ app.use((req, res, next) => {
 // ============== API ROUTES ==============
 
 // Admin login
-app.post('/api/admin/login', async (req, res) => {
+app.post('/api/admin/login', loginLimiter, async (req, res) => {
   const { username, password } = req.body;
 
   try {
