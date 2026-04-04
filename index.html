@@ -228,9 +228,7 @@
 
                 if (blogs.length === 0) return;
 
-                const topBlogs = blogs.slice(0, 2);
-
-                container.innerHTML = topBlogs.map(blog => `
+                container.innerHTML = blogs.map(blog => `
                     <div class="editorial-block">
                         <div class="meta">${new Date(blog.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).toUpperCase()}</div>
                         <h3>${blog.title}</h3>
