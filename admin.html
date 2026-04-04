@@ -114,6 +114,45 @@
             resize: vertical;
         }
 
+        /* Content Mode Tabs */
+        .content-mode-tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 0;
+            border-radius: 8px 8px 0 0;
+            overflow: hidden;
+            border: 1px solid #444;
+            border-bottom: none;
+        }
+
+        .content-mode-tab {
+            flex: 1;
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #888;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-family: 'Segoe UI', sans-serif;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .content-mode-tab:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ccc;
+        }
+
+        .content-mode-tab.active {
+            background: rgba(255, 255, 255, 0.12);
+            color: #00ff00;
+            font-weight: 600;
+        }
+
+        .content-mode-tab .tab-icon {
+            margin-right: 6px;
+        }
+
         /* Rich Text Editor */
         .editor-toolbar {
             display: flex;
@@ -123,7 +162,6 @@
             background: rgba(255, 255, 255, 0.08);
             border: 1px solid #444;
             border-bottom: none;
-            border-radius: 8px 8px 0 0;
         }
 
         .editor-toolbar button {
@@ -583,30 +621,43 @@
                         </div>
                         <div class="form-group">
                             <label>Content *</label>
-                            <div class="editor-toolbar">
-                                <button type="button" onclick="execCmd('bold')" title="Bold"><b>B</b></button>
-                                <button type="button" onclick="execCmd('italic')" title="Italic"><i>I</i></button>
-                                <button type="button" onclick="execCmd('underline')" title="Underline"><u>U</u></button>
-                                <div class="sep"></div>
-                                <button type="button" onclick="execBlock('h2')" title="Heading 2">H2</button>
-                                <button type="button" onclick="execBlock('h3')" title="Heading 3">H3</button>
-                                <button type="button" onclick="execBlock('p')" title="Paragraph">P</button>
-                                <div class="sep"></div>
-                                <button type="button" onclick="execCmd('insertUnorderedList')" title="Bullet List">•
-                                    List</button>
-                                <button type="button" onclick="execCmd('insertOrderedList')" title="Numbered List">1.
-                                    List</button>
-                                <button type="button" onclick="execBlock('blockquote')" title="Blockquote">❝
-                                    Quote</button>
-                                <div class="sep"></div>
-                                <button type="button" onclick="clearFormatting()" title="Clear Formatting">✕
-                                    Clear</button>
-                                <button type="button" class="editor-toggle-btn" id="html-toggle-btn" onclick="toggleHtmlEditor()" title="Edit HTML Source">
-                                    &lt;/&gt; HTML
+                            <div class="content-mode-tabs">
+                                <button type="button" class="content-mode-tab active" onclick="switchContentMode('writing')">
+                                    <span class="tab-icon">✏️</span> Writing
+                                </button>
+                                <button type="button" class="content-mode-tab" onclick="switchContentMode('html')">
+                                    <span class="tab-icon">&lt;/&gt;</span> HTML Code
                                 </button>
                             </div>
-                            <div id="blog-content" class="content-editor" contenteditable="true"></div>
-                            <textarea id="blog-content-html" class="html-source-editor" style="display: none;" placeholder="Paste your HTML code here... (supports images, graphs, tables, and any HTML elements)"></textarea>
+                            
+                            <!-- Writing Mode: Rich Text Editor -->
+                            <div id="writing-mode">
+                                <div class="editor-toolbar">
+                                    <button type="button" onclick="execCmd('bold')" title="Bold"><b>B</b></button>
+                                    <button type="button" onclick="execCmd('italic')" title="Italic"><i>I</i></button>
+                                    <button type="button" onclick="execCmd('underline')" title="Underline"><u>U</u></button>
+                                    <div class="sep"></div>
+                                    <button type="button" onclick="execBlock('h2')" title="Heading 2">H2</button>
+                                    <button type="button" onclick="execBlock('h3')" title="Heading 3">H3</button>
+                                    <button type="button" onclick="execBlock('p')" title="Paragraph">P</button>
+                                    <div class="sep"></div>
+                                    <button type="button" onclick="execCmd('insertUnorderedList')" title="Bullet List">•
+                                        List</button>
+                                    <button type="button" onclick="execCmd('insertOrderedList')" title="Numbered List">1.
+                                        List</button>
+                                    <button type="button" onclick="execBlock('blockquote')" title="Blockquote">❝
+                                        Quote</button>
+                                    <div class="sep"></div>
+                                    <button type="button" onclick="clearFormatting()" title="Clear Formatting">✕
+                                        Clear</button>
+                                </div>
+                                <div id="blog-content" class="content-editor" contenteditable="true"></div>
+                            </div>
+                            
+                            <!-- HTML Mode: Raw Code Editor -->
+                            <div id="html-mode" style="display: none;">
+                                <textarea id="blog-content-html" class="html-source-editor" placeholder="Paste your complete HTML code here...&#10;&#10;Supports:&#10;• Images (<img>)&#10;• Tables&#10;• Graphs & Charts&#10;• Videos&#10;• Any HTML elements"></textarea>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>Excerpt</label>
@@ -796,30 +847,28 @@
             document.getElementById('blog-content').focus();
         }
 
-        // HTML Source Editor Toggle
-        let isHtmlSourceMode = false;
+        // Content Mode Switching
+        let currentContentMode = 'writing'; // 'writing' or 'html'
 
-        function toggleHtmlEditor() {
-            const visualEditor = document.getElementById('blog-content');
-            const htmlSource = document.getElementById('blog-content-html');
-            const toggleBtn = document.getElementById('html-toggle-btn');
+        function switchContentMode(mode) {
+            const writingMode = document.getElementById('writing-mode');
+            const htmlMode = document.getElementById('html-mode');
+            const tabs = document.querySelectorAll('.content-mode-tab');
 
-            if (!isHtmlSourceMode) {
-                // Switch to HTML source mode
-                htmlSource.value = visualEditor.innerHTML;
-                visualEditor.style.display = 'none';
-                htmlSource.style.display = 'block';
-                toggleBtn.classList.add('active');
-                isHtmlSourceMode = true;
-                htmlSource.focus();
+            currentContentMode = mode;
+
+            if (mode === 'writing') {
+                // Switch to visual writing mode
+                writingMode.style.display = 'block';
+                htmlMode.style.display = 'none';
+                tabs[0].classList.add('active');
+                tabs[1].classList.remove('active');
             } else {
-                // Switch back to visual editor
-                visualEditor.innerHTML = htmlSource.value;
-                htmlSource.style.display = 'none';
-                visualEditor.style.display = 'block';
-                toggleBtn.classList.remove('active');
-                isHtmlSourceMode = false;
-                visualEditor.focus();
+                // Switch to HTML code mode
+                writingMode.style.display = 'none';
+                htmlMode.style.display = 'block';
+                tabs[0].classList.remove('active');
+                tabs[1].classList.add('active');
             }
         }
 
@@ -875,9 +924,9 @@
         document.getElementById('blog-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            // Get content from the correct editor
+            // Get content from the active mode
             let content;
-            if (isHtmlSourceMode) {
+            if (currentContentMode === 'html') {
                 content = document.getElementById('blog-content-html').value.trim();
             } else {
                 const contentEl = document.getElementById('blog-content');
@@ -939,8 +988,8 @@
                 document.getElementById('blog-id').value = blog.id;
                 document.getElementById('blog-title').value = blog.title;
                 
-                // If in HTML source mode, update the textarea
-                if (isHtmlSourceMode) {
+                // Set content based on current mode
+                if (currentContentMode === 'html') {
                     document.getElementById('blog-content-html').value = blog.content;
                 } else {
                     document.getElementById('blog-content').innerHTML = blog.content;
@@ -983,9 +1032,9 @@
             document.getElementById('blog-form-title').textContent = 'Add New Blog';
             document.getElementById('blog-message').innerHTML = '';
             
-            // Reset to visual editor if in HTML source mode
-            if (isHtmlSourceMode) {
-                toggleHtmlEditor();
+            // Reset to Writing mode
+            if (currentContentMode !== 'writing') {
+                switchContentMode('writing');
             }
         }
 
