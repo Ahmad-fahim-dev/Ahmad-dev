@@ -136,7 +136,7 @@
         <!-- Projects Feature -->
         <section id="projects">
             <h2 data-label="SELECTED WORK">PROJECTS</h2>
-            <div class="editorial-grid">
+            <div class="editorial-grid" id="latest-projects">
                 <div class="editorial-block">
                     <div class="meta">AI / MACHINE LEARNING</div>
                     <h3>Intelligent Solutions</h3>
@@ -241,6 +241,34 @@
             }
         }
 
+        async function fetchLatestProjects() {
+            const container = document.getElementById('latest-projects');
+            if (!container) return;
+            try {
+                const response = await fetch(`${API_URL}/projects`);
+                if (!response.ok) return;
+                const projects = await response.json();
+
+                if (projects.length === 0) return;
+
+                container.innerHTML = projects.map(project => `
+                    <div class="editorial-block" style="display: flex; flex-direction: column; gap: 15px; height: 100%;">
+                        ${project.image ? `<img src="${project.image}" alt="${project.title}" onerror="this.style.display='none'">` : ''}
+                        <div class="meta" style="margin-bottom: 0;">
+                            ${project.technologies && project.technologies.length > 0
+                        ? project.technologies.join(' / ').toUpperCase()
+                        : new Date(project.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).toUpperCase()}
+                        </div>
+                        <h3 style="margin-bottom: 0; line-height: 1.3; flex-grow: 1;">${project.title}</h3>
+                        <a href="projects.html" class="read-more" style="margin-top: auto;">Explore Details →</a>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error fetching latest projects:', error);
+            }
+        }
+
+        fetchLatestProjects();
         fetchLatestBlogs();
 
         // Theme Toggle Logic
