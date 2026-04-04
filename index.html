@@ -229,11 +229,11 @@
                 if (blogs.length === 0) return;
 
                 container.innerHTML = blogs.map(blog => `
-                    <div class="editorial-block">
-                        <div class="meta">${new Date(blog.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).toUpperCase()}</div>
-                        <h3>${blog.title}</h3>
-                        <p>${blog.excerpt}</p>
-                        <a href="blog-detail.html?id=${blog.id}" class="read-more">Continue Reading →</a>
+                    <div class="editorial-block" style="display: flex; flex-direction: column; gap: 15px; height: 100%;">
+                        ${blog.image ? `<img src="${blog.image}" alt="${blog.title}" onerror="this.style.display='none'">` : ''}
+                        <div class="meta" style="margin-bottom: 0;">${new Date(blog.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).toUpperCase()}</div>
+                        <h3 style="margin-bottom: 0; line-height: 1.3; flex-grow: 1;">${blog.title}</h3>
+                        <a href="blog-detail.html?id=${blog.id}" class="read-more" style="margin-top: auto;">Continue Reading →</a>
                     </div>
                 `).join('');
             } catch (error) {
