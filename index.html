@@ -157,7 +157,7 @@
         <!-- Blog/Articles -->
         <section id="blog">
             <h2 data-label="LATEST THOUGHTS">ARTICLES</h2>
-            <div class="editorial-grid">
+            <div class="editorial-grid" id="latest-articles">
                 <div class="editorial-block">
                     <div class="meta">FEBRUARY 16, 2026</div>
                     <h3>Insights into AI Evolution</h3>
@@ -216,6 +216,35 @@
         </footer>
     </div>
     <script>
+        const API_URL = '/api';
+
+        async function fetchLatestBlogs() {
+            const container = document.getElementById('latest-articles');
+            if (!container) return;
+            try {
+                const response = await fetch(`${API_URL}/blogs`);
+                if (!response.ok) return;
+                const blogs = await response.json();
+
+                if (blogs.length === 0) return;
+
+                const topBlogs = blogs.slice(0, 2);
+
+                container.innerHTML = topBlogs.map(blog => `
+                    <div class="editorial-block">
+                        <div class="meta">${new Date(blog.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).toUpperCase()}</div>
+                        <h3>${blog.title}</h3>
+                        <p>${blog.excerpt}</p>
+                        <a href="blog-detail.html?id=${blog.id}" class="read-more">Continue Reading →</a>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error fetching latest blogs:', error);
+            }
+        }
+
+        fetchLatestBlogs();
+
         // Theme Toggle Logic
         const themeToggle = document.getElementById('theme-toggle');
         const body = document.body;
