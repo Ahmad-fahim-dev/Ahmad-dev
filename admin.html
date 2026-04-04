@@ -214,6 +214,98 @@
             pointer-events: none;
         }
 
+        .content-editor img {
+            max-width: 100%;
+            height: auto;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+
+        .content-editor table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .content-editor table th,
+        .content-editor table td {
+            padding: 10px;
+            border: 1px solid #444;
+            text-align: left;
+        }
+
+        .content-editor table th {
+            background: rgba(255, 255, 255, 0.08);
+            font-weight: 600;
+        }
+
+        .content-editor pre {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 0.9rem;
+        }
+
+        .content-editor code {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 0.9rem;
+        }
+
+        /* HTML Source Editor */
+        .html-source-editor {
+            width: 100%;
+            min-height: 250px;
+            max-height: 500px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #444;
+            border-radius: 0 0 8px 8px;
+            color: #00ff00;
+            font-size: 0.85rem;
+            font-family: 'Courier New', Consolas, monospace;
+            line-height: 1.5;
+            resize: vertical;
+            outline: none;
+        }
+
+        .html-source-editor:focus {
+            border-color: #00ff00;
+        }
+
+        .editor-toggle-btn {
+            background: rgba(255, 255, 255, 0.08);
+            color: #ccc;
+            border: 1px solid #555;
+            padding: 6px 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-family: 'Segoe UI', sans-serif;
+            transition: all 0.2s ease;
+            margin-left: auto;
+        }
+
+        .editor-toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            border-color: #888;
+        }
+
+        .editor-toggle-btn.active {
+            background: rgba(0, 255, 0, 0.15);
+            color: #00ff00;
+            border-color: #00ff00;
+        }
+
         .submit-btn {
             background: linear-gradient(90deg, #444, #666);
             color: #fff;
@@ -509,8 +601,12 @@
                                 <div class="sep"></div>
                                 <button type="button" onclick="clearFormatting()" title="Clear Formatting">✕
                                     Clear</button>
+                                <button type="button" class="editor-toggle-btn" id="html-toggle-btn" onclick="toggleHtmlEditor()" title="Edit HTML Source">
+                                    &lt;/&gt; HTML
+                                </button>
                             </div>
                             <div id="blog-content" class="content-editor" contenteditable="true"></div>
+                            <textarea id="blog-content-html" class="html-source-editor" style="display: none;" placeholder="Paste your HTML code here... (supports images, graphs, tables, and any HTML elements)"></textarea>
                         </div>
                         <div class="form-group">
                             <label>Excerpt</label>
@@ -700,6 +796,33 @@
             document.getElementById('blog-content').focus();
         }
 
+        // HTML Source Editor Toggle
+        let isHtmlSourceMode = false;
+
+        function toggleHtmlEditor() {
+            const visualEditor = document.getElementById('blog-content');
+            const htmlSource = document.getElementById('blog-content-html');
+            const toggleBtn = document.getElementById('html-toggle-btn');
+
+            if (!isHtmlSourceMode) {
+                // Switch to HTML source mode
+                htmlSource.value = visualEditor.innerHTML;
+                visualEditor.style.display = 'none';
+                htmlSource.style.display = 'block';
+                toggleBtn.classList.add('active');
+                isHtmlSourceMode = true;
+                htmlSource.focus();
+            } else {
+                // Switch back to visual editor
+                visualEditor.innerHTML = htmlSource.value;
+                htmlSource.style.display = 'none';
+                visualEditor.style.display = 'block';
+                toggleBtn.classList.remove('active');
+                isHtmlSourceMode = false;
+                visualEditor.focus();
+            }
+        }
+
         // Paste handler — cleans HTML while keeping semantic tags
         document.getElementById('blog-content').addEventListener('paste', function (e) {
             e.preventDefault();
@@ -751,8 +874,15 @@
 
         document.getElementById('blog-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const contentEl = document.getElementById('blog-content');
-            const content = contentEl.innerHTML.trim();
+            
+            // Get content from the correct editor
+            let content;
+            if (isHtmlSourceMode) {
+                content = document.getElementById('blog-content-html').value.trim();
+            } else {
+                const contentEl = document.getElementById('blog-content');
+                content = contentEl.innerHTML.trim();
+            }
 
             if (!content || content === '<br>' || content === '<p><br></p>') {
                 document.getElementById('blog-message').innerHTML =
@@ -808,7 +938,14 @@
 
                 document.getElementById('blog-id').value = blog.id;
                 document.getElementById('blog-title').value = blog.title;
-                document.getElementById('blog-content').innerHTML = blog.content;
+                
+                // If in HTML source mode, update the textarea
+                if (isHtmlSourceMode) {
+                    document.getElementById('blog-content-html').value = blog.content;
+                } else {
+                    document.getElementById('blog-content').innerHTML = blog.content;
+                }
+                
                 document.getElementById('blog-excerpt').value = blog.excerpt || '';
                 document.getElementById('blog-author').value = blog.author;
                 document.getElementById('blog-form-title').textContent = 'Edit Blog';
@@ -842,8 +979,14 @@
             document.getElementById('blog-form').reset();
             document.getElementById('blog-id').value = '';
             document.getElementById('blog-content').innerHTML = '';
+            document.getElementById('blog-content-html').value = '';
             document.getElementById('blog-form-title').textContent = 'Add New Blog';
             document.getElementById('blog-message').innerHTML = '';
+            
+            // Reset to visual editor if in HTML source mode
+            if (isHtmlSourceMode) {
+                toggleHtmlEditor();
+            }
         }
 
         // Project Functions
