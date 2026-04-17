@@ -66,9 +66,9 @@ app.use('/api/', limiter);
 
 // Stricter Rate Limiting for Login
 const loginLimiter = rateLimit({
-  windowMs: 60 * 60 * 1000, // 1 hour
-  max: 5, // Limit each IP to 5 login requests per hour
-  message: 'Too many login attempts from this IP, please try again after an hour.'
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 20, // Limit each IP to 20 login requests per windowMs
+  message: 'Too many login attempts from this IP, please try again after 15 minutes.'
 });
 
 // Supabase Connection
