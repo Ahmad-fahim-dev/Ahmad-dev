@@ -27,12 +27,17 @@ async function debugAdmin() {
 
     // 2. Check each admin
     for (const admin of admins) {
-        console.log(`\nUser: '${admin.username}'`);
-        console.log(`Hash: ${admin.password.substring(0, 20)}...`);
+        console.log(`\nUser in DB: '${admin.username}'`);
+        console.log(`Hash in DB: ${admin.password.substring(0, 20)}...`);
 
-        // 3. Test Password
-        const isMatch = bcrypt.compareSync('$$dollar$$', admin.password);
-        console.log(`Password '$$dollar$$' match? ${isMatch ? '✅ YES' : '❌ NO'}`);
+        // 3. Test Passwords
+        const isMatchNew = bcrypt.compareSync('iamkhanbb', admin.password);
+        const isMatchOld = bcrypt.compareSync('$$dollar$$', admin.password);
+        const isMatchOld2 = bcrypt.compareSync('password123', admin.password);
+
+        console.log(`- Password 'iamkhanbb' match? ${isMatchNew ? '✅ YES' : '❌ NO'}`);
+        console.log(`- Password '$$dollar$$' match? ${isMatchOld ? '✅ YES' : '❌ NO'}`);
+        console.log(`- Password 'password123' match? ${isMatchOld2 ? '✅ YES' : '❌ NO'}`);
     }
 }
 

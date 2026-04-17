@@ -193,7 +193,7 @@ app.post('/api/admin/login', loginLimiter, async (req, res) => {
       const { data, error } = await supabase
         .from('admins')
         .select('*')
-        .eq('username', username)
+        .ilike('username', username.trim())
         .single();
 
       if (error && error.code !== 'PGRST116') { // PGRST116 is "Row not found"
@@ -203,14 +203,14 @@ app.post('/api/admin/login', loginLimiter, async (req, res) => {
       admin = data;
     } else {
       admin = loadData(adminFile, null);
-      if (admin && admin.username !== username) admin = null;
+      if (admin && admin.username.toLowerCase() !== username.trim().toLowerCase()) admin = null;
     }
 
     if (!admin) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
-    const validPassword = await bcrypt.compare(password, admin.password);
+    const validPassword = await bcrypt.compare(password.trim(), admin.password);
     if (!validPassword) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
