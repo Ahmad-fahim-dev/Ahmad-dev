@@ -73,7 +73,7 @@ create policy "Enable all access for all users" on public.admins for all using (
 Run this SQL to add the default admin user:
 
 ```sql
--- Password is '$$dollar$$' hashed with bcrypt
+-- Password is 'iamkhanbb' hashed with bcrypt
 insert into public.admins (username, password)
-values ('Ahmad', '$2a$10$/3BcRK2J2MoGrBIIdfuXF.PMIvWOURjPwZ6afxN8mKkCyECw5iKqq');
+values ('Ahmad', '$2a$10$AUlSYAVazgbfJJRLyKjdq.CTka16LaI8.Y98/ZikXU2vhCi7ds4gu');
 ```

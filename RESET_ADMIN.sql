@@ -9,9 +9,9 @@ DELETE FROM admins WHERE username = 'ahmad';
 
 -- 2. Insert fresh Admin
 -- Username: Ahmad
--- Password: password123
+-- Password: iamkhanbb
 INSERT INTO admins (username, password) 
-VALUES ('Ahmad', '$2a$10$E/AVW2zp7SkMkxiwScsYNuB1284H73zb3r7Kg8KgtItAbuMqqjFrG');
+VALUES ('Ahmad', '$2a$10$AUlSYAVazgbfJJRLyKjdq.CTka16LaI8.Y98/ZikXU2vhCi7ds4gu');
 
 -- 3. Verify it exists (The result should show the user)
 SELECT * FROM admins;

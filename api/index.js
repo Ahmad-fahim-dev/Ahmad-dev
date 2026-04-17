@@ -142,7 +142,7 @@ if (!isConnected) {
   if (!admin) {
     admin = {
       username: 'Ahmad',
-      password: bcrypt.hashSync('$$dollar$$', 10)
+      password: bcrypt.hashSync('iamkhanbb', 10)
     };
     saveLocalData(adminFile, admin);
   }
